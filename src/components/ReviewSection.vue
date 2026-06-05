@@ -75,7 +75,7 @@ export default {
       error: '',
       isLoggedIn: false,
       currentUserId: null,
-      API_BASE: 'http://localhost:8080/api'
+      API_BASE: 'https://shoes-web-be-1.onrender.com/api'
     };
   },
   async mounted() {

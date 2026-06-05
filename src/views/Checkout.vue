@@ -280,7 +280,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
-const API = 'http://localhost:8080/api'
+const API = 'https://shoes-web-be-1.onrender.com/api'
 const router = useRouter()
 
 const user = ref(null)
