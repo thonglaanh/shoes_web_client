@@ -67,12 +67,12 @@
         <div class="rating-row">
           <div class="stars">
             <svg v-for="i in 5" :key="i" width="15" height="15" viewBox="0 0 24 24"
-              :fill="i<=4?'#f59e0b':'none'" :stroke="i<=4?'#f59e0b':'#e0e0e0'" stroke-width="2">
+              :fill="i<=Math.round(ratingStats.averageRating)?'#f59e0b':'none'" :stroke="i<=Math.round(ratingStats.averageRating)?'#f59e0b':'#e0e0e0'" stroke-width="2">
               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
             </svg>
-            <span class="rating-num">4.0</span>
+            <span class="rating-num">{{ ratingStats.averageRating }}</span>
             <span class="rating-sep">|</span>
-            <span class="rating-count">128 đánh giá</span>
+            <span class="rating-count">{{ ratingStats.totalReviews }} đánh giá</span>
             <span class="rating-sep">|</span>
             <span class="sold-count">342 đã bán</span>
           </div>
@@ -242,6 +242,9 @@
       </div>
     </div>
 
+    <!-- Reviews Section -->
+    <ReviewSection :productId="product.maSanPham" @review-added="onReviewAdded" />
+
     <!-- Featured Products Slider -->
     <div class="featured-section" v-if="featuredProducts.length > 0">
       <div class="featured-header">
@@ -312,6 +315,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import ReviewSection from '../components/ReviewSection.vue'
 
 const route = useRoute()
 const API = 'http://localhost:8080/api'
@@ -330,6 +334,7 @@ const sliderRef = ref(null)
 const sliderStart = ref(true)
 const sliderEnd = ref(false)
 const allProductDetails = ref({})
+const ratingStats = ref({ averageRating: 0, totalReviews: 0 })
 
 function formatPrice(v) {
   if (v == null) return ''
@@ -479,6 +484,20 @@ function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
+function onReviewAdded() {
+  // Reload rating stats when a review is added
+  const id = route.params.id
+  fetch(`${API}/reviews/stats/product/${id}`)
+    .then(res => {
+      if (res.ok) return res.json()
+      throw new Error('Failed to load stats')
+    })
+    .then(data => {
+      ratingStats.value = data
+    })
+    .catch(e => console.error('Lỗi cập nhật rating:', e))
+}
+
 onMounted(async () => {
   const id = route.params.id
   try {
@@ -498,6 +517,17 @@ onMounted(async () => {
         selectedImage.value = product.value.hinhAnh
       }
     }
+    
+    // Load rating stats
+    try {
+      const rRes = await fetch(`${API}/reviews/stats/product/${id}`)
+      if (rRes.ok) {
+        ratingStats.value = await rRes.json()
+      }
+    } catch (e) {
+      console.error('Lỗi tải rating stats:', e)
+    }
+    
     // Load featured products
     const fpRes = await fetch(`${API}/products?page=0&size=12`)
     if (fpRes.ok) {
