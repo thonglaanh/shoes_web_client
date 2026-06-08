@@ -75,7 +75,7 @@ export default {
       error: '',
       isLoggedIn: false,
       currentUserId: null,
-      API_BASE: 'https://shoes-web-be-1.onrender.com/api'
+      API_BASE: 'https://shoes-web-be-t7xh.onrender.com/api'
     };
   },
   async mounted() {

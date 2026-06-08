@@ -318,7 +318,7 @@ import { useRoute } from 'vue-router'
 import ReviewSection from '../components/ReviewSection.vue'
 
 const route = useRoute()
-const API = 'https://shoes-web-be-1.onrender.com/api'
+const API = 'https://shoes-web-be-t7xh.onrender.com/api'
 
 const product = ref(null)
 const details = ref([])

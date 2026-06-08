@@ -128,7 +128,7 @@
 import { ref, computed, onMounted } from 'vue'
 import api from '../utils/api'
 
-const API = 'https://shoes-web-be-1.onrender.com/api'
+const API = 'https://shoes-web-be-t7xh.onrender.com/api'
 
 const products = ref([])
 const productDetails = ref([])

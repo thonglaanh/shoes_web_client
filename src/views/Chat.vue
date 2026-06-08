@@ -82,7 +82,7 @@
 </template>
 
 <script>
-const API_BASE = import.meta.env.VITE_API_URL || 'https://shoes-web-be-1.onrender.com'
+const API_BASE = import.meta.env.VITE_API_URL || 'https://shoes-web-be-t7xh.onrender.com'
 const CHAT_SESSIONS_KEY = 'client_chat_sessions'
 const DEFAULT_SHOE_IMAGE = 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80'
 

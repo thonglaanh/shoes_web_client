@@ -179,7 +179,7 @@
 import { ref, onMounted, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 
-const API = 'https://shoes-web-be-1.onrender.com/api'
+const API = 'https://shoes-web-be-t7xh.onrender.com/api'
 const route = useRoute()
 
 const user = ref(null)
